@@ -34,7 +34,7 @@ Route::get("/PolicyByType/{type}",[PolicyController::class,'PolicyByType']);
 
 //Product Review
 Route::get('/listReviewByProduct/{product_id}', [ProductController::class, 'ListReviewByProduct']);
-
+Route::post('/createProductReview', [ProductController::class, 'CreateProductReview'])->middleware(TokenAuthenticate::class);
 
 
 // User Auth
@@ -56,3 +56,5 @@ Route::get('/logout',[UserController::class,'UserLogout']);// User Auth
 /*এখানে মিডিল ওয়ার দেওয়ার অর্থ হচ্ছে TokenAuthenticate.php ফাইলের ভিতরে cookie থেকে টোকেন রিসিভ করতে পারি এবং সেই token ta ডিকোড করার পর তা email and id রিড করতে পারি.*/
 Route::post('/CreateProfile',[ProfileController::class,'CreateProfile'])->middleware([TokenAuthenticate::class]);
 Route::get('/readProfile',[ProfileController::class,'readProfile'])->middleware([TokenAuthenticate::class]);
+
+
