@@ -7,8 +7,8 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PolicyController;
 use App\Http\Controllers\UserController;
-
-
+use App\Http\Controllers\ProfileController;
+use App\Http\Middleware\TokenAuthenticate;
 
 Route::get('/', function () {
     return view('welcome');
@@ -47,6 +47,12 @@ Route::get('/UserLogin/{UserEmail}', [UserController::class, 'UserLogin']);
 
 Route::get('/VerifyLogin/{UserEmail}/{otp}', [UserController::class,'VerifyLogin']);
 
-
 //user এর লগইন click করলে cookie টা destory করে দিবো।
 Route::get('/logout',[UserController::class,'UserLogout']);// User Auth
+
+
+//User Profile
+
+/*এখানে মিডিল ওয়ার দেওয়ার অর্থ হচ্ছে TokenAuthenticate.php ফাইলের ভিতরে cookie থেকে টোকেন রিসিভ করতে পারি এবং সেই token ta ডিকোড করার পর তা email and id রিড করতে পারি.*/
+Route::post('/CreateProfile',[ProfileController::class,'CreateProfile'])->middleware([TokenAuthenticate::class]);
+Route::get('/readProfile',[ProfileController::class,'readProfile'])->middleware([TokenAuthenticate::class]);
