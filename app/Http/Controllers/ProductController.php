@@ -13,6 +13,7 @@ use App\Models\ProductReview;
 use App\Models\CustomerProfile;
 use App\Helper\ResponseHelper;
 use App\Models\ProductWish;
+use App\Models\ProductCart;
 
 class ProductController extends Controller
 {
@@ -149,8 +150,70 @@ class ProductController extends Controller
 
     public function RemoveWishList(Request $request):JsonResponse{
         $user_id=$request->header('id');
-        //updateOrCreate এর মত কিন্তু শেষে delete() মেথড কল করে দিয়েছি 
+        //updateOrCreate এর মত কিন্তু শেষে delete() মেথড কল করে দিয়েছি
         $data=ProductWish::where(['user_id' => $user_id,'product_id'=>$request->product_id])->delete();
+        return ResponseHelper::Out('success',$data,200);
+    }
+
+
+    public function CreateCartList(Request $request):JsonResponse{
+        $user_id=$request->header('id');
+
+        //ইউজার যখন প্রোডাক্ট  add to cart এ click করছে, কোন proudct add to cart এড করবো তার id, color, size, qty
+        $product_id =$request->input('product_id');
+        $color=$request->input('color');
+        $size=$request->input('size');
+        $qty=$request->input('qty');
+
+        //শুরুতে ইউনিট প্রাইস 0  দিয়ে রাখবো
+        $UnitPrice=0;
+
+        //প্রোডাক্টের বিস্তারিত ডাটাবেজ থেকে product_id এর মাধ্যমে সংগ্রহ করা হচ্ছে. তার মানে হচ্ছে product:: টেবিলের মধ্যে থেকে $product_id যে প্রোডাক্ট সে একটু কার্ড করতে চায় তার “id” দিয়ে প্রোডাক্ট এর ডিটেল বের করে নিয়ে আসলাম
+        $productDetails=Product::where('id','=',$product_id)->first();
+
+        //যদি প্রোডাক্টের ডিসকাউন্ট এক্টিভ থাকে, তাহলে ডিসকাউন্ট প্রাইস নেওয়া হবে।
+        if($productDetails->discount==1){
+            $UnitPrice=$productDetails->discount_price;
+        }
+
+        //যদি ডিসকাউন্ট না থাকে, তাহলে প্রোডাক্টের regular দাম $UnitPrice এ সেট করা হয়েছে
+        else{
+            $UnitPrice=$productDetails->price;
+        }
+
+        //প্রোডাক্টের পরিমাণ এবং ইউনিট প্রাইস দিয়ে মোট মূল্য গুন করে $totalPrice এ রাখা হচ্ছে।
+        $totalPrice=$qty*$UnitPrice;
+
+
+        //ProductCart::updateOrCreate মডেল ব্যবহার করে ডাটাবেজে কার্টের তথ্য সেভ বা আপডেট করা হচ্ছে। র্টে প্রোডাক্ট আইডি এবং ইউজারের আইডি চেক করে, যদি আগে থেকে কার্টে প্রোডাক্ট থাকে তাহলে আপডেট হবে
+        $data=ProductCart::updateOrCreate(
+            ['user_id' => $user_id,'product_id'=>$product_id],
+            [
+                'user_id' => $user_id,
+                'product_id'=>$product_id,
+                'color'=>$color,
+                'size'=>$size,
+                'qty'=>$qty,
+                'price'=>$totalPrice
+            ]
+        );
+
+        return ResponseHelper::Out('success',$data,200);
+    }
+
+
+    //same as wishlist
+    public function CartList(Request $request):JsonResponse{
+        $user_id=$request->header('id');
+        $data=ProductCart::where('user_id',$user_id)->with('product')->get();
+        return ResponseHelper::Out('success',$data,200);
+    }
+
+
+
+    public function DeleteCartList(Request $request):JsonResponse{
+        $user_id=$request->header('id');
+        $data=ProductCart::where('user_id','=',$user_id)->where('product_id','=',$request->product_id)->delete();
         return ResponseHelper::Out('success',$data,200);
     }
 
