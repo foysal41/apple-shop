@@ -12,6 +12,7 @@ use App\Models\ProductDetails;
 use App\Models\ProductReview;
 use App\Models\CustomerProfile;
 use App\Helper\ResponseHelper;
+use App\Models\ProductWish;
 
 class ProductController extends Controller
 {
@@ -120,7 +121,38 @@ class ProductController extends Controller
 
     }
 
+    public function CreateWishList(Request $request):JsonResponse{
+        //আমাদের middleware কাজ হচ্ছে হেডারে সার্বক্ষণিক ইমেইল এবং আইডি দিতে থাকা. তদ্রূপভাবে $request দিয়ে -> header থেকে id টা কে ধরে নিলাম
 
+        //অন্যদিকে productWishlist model তৈরি করে রেখেছি সে মডেলের ভেতর দুইটি product_id, user_id fillable property রয়েছে
+        $user_id=$request->header('id');
+
+
+        //দুইটি fillable property এক সাতে updateOrCreate করার জন্য productWish::model থেকে updateOrCreate মেথড কে কল করেছি
+        $data=ProductWish::updateOrCreate(
+
+            //আমি যেটা বুঝলাম যে $user_id হেডারের থেকে রিকোয়েস্ট এর মাধ্যমে 'user_id' ডাটাবেজের এই কলামে নতুন আইডি ইনফরমেশন সেভ করছে?
+            ['user_id' => $user_id,'product_id'=>$request->product_id],
+            ['user_id' => $user_id,'product_id'=>$request->product_id],
+        );
+        return ResponseHelper::Out('success',$data,200);
+    }
+
+    public function ProductWishList(Request $request):JsonResponse{
+        $user_id=$request->header('id');
+
+        //এখানে একটা সিলেক্ট query চালাচ্ছি এখানে যে ইউজার সেই ইউজারের wishlist নিয়ে আসবো  এর জন্য   ProductWish table থেকে where('user_id',$user_id).  আমরা জানি productWish মডেলের মধ্যে productWish এর সাথে product  belogsTo inverse রিলেশন করানো আছে
+
+        $data=ProductWish::where('user_id',$user_id)->with('product')->get();
+        return ResponseHelper::Out('success',$data,200);
+    }
+
+    public function RemoveWishList(Request $request):JsonResponse{
+        $user_id=$request->header('id');
+        //updateOrCreate এর মত কিন্তু শেষে delete() মেথড কল করে দিয়েছি 
+        $data=ProductWish::where(['user_id' => $user_id,'product_id'=>$request->product_id])->delete();
+        return ResponseHelper::Out('success',$data,200);
+    }
 
 
 }
