@@ -120,4 +120,47 @@ class InvoiceController extends Controller
         }
 
     }
+
+    function InvoiceList(Request $request){
+        $user_id=$request->header('id');
+        return Invoice::where('user_id',$user_id)->get();
+    }
+
+    function InvoiceProductList(Request $request){
+        $user_id=$request->header('id');
+        $invoice_id=$request->invoice_id;
+        return InvoiceProduct::where(['user_id'=>$user_id,'invoice_id'=>$invoice_id])->with('product')->get();
+    }
+
+    //যখন পেমেন্ট সাকসেস হবে তখন SSLCommerz.php file এর মদ্ধে parameter হিসাবে বা query string  এ tran_id পাঠিয়ে দিয়েছি. কোথায় পাঠিয়ে দিচ্ছি? InvoiceController.php ফাইল এর নিচে| InitiatePayment function এর মদ্ধে গেলে দেখতে পাবো
+
+    // একটা ট্রানজেকশন আইডি মানে হচ্ছে একটা পেমেন্ট
+
+
+    function PaymentSuccess(Request $request){
+        //// যখন পেমেন্ট সাকসেস হচ্ছে  querystring ট্রানজেকশন আইডিটা ধরে নিয়ে  সরাসরি চলে যাচ্ছি SSLCommerz -> InitiateSuccess() ফাইল এর ভেতর
+        SSLCommerz::InitiateSuccess($request->query('tran_id'));
+        //return redirect('/profile');
+        return 1;
+
+    }
+
+
+    function PaymentCancel(Request $request){
+        SSLCommerz::InitiateCancel($request->query('tran_id'));
+        return redirect('/profile');
+    }
+
+    function PaymentFail(Request $request){
+        return SSLCommerz::InitiateFail($request->query('tran_id'));
+        return redirect('/profile');
+    }
+
+    // PaymentIPN একটি পোস্ট রিকোয়েস্ট পাঠাবে PaymentIPN রিকোয়েস্টের ভেতরে একটি json থাকবে .  এর ভিতরে tran_id, status , val_id ssl commerce আমাদের পাঠাবে
+
+    // SSLCommerz.php file এর মদ্ধে static function InitiateIPN($tran_id,$status,$val_id)-> এখান থেকে পাঠাচ্ছে
+
+    function PaymentIPN(Request $request){
+        return SSLCommerz::InitiateIPN($request->input('tran_id'),$request->input('status'),$request->input('val_id'));
+    }
 }

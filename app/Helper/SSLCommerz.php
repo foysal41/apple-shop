@@ -24,11 +24,12 @@ class SSLCommerz
               "currency"=>$ssl->currency,
               "tran_id"=>$tran_id,
 
-              //সাকসেসের সাথে সাথে ট্রানজেকশন আইডিটাও পাঠিয়ে দিচ্ছি 
+              //সাকসেসের সাথে সাথে ট্রানজেকশন আইডিটাও পাঠিয়ে দিচ্ছি
               "success_url"=>"$ssl->success_url?tran_id=$tran_id",
               "fail_url"=>"$ssl->fail_url?tran_id=$tran_id",
               "cancel_url"=>"$ssl->cancel_url?tran_id=$tran_id",
               "ipn_url"=>$ssl->ipn_url,
+
               "cus_name"=>$Profile->cus_name,
               "cus_email"=>$user_email,
               "cus_add1"=>$Profile->cus_add,
@@ -61,25 +62,20 @@ class SSLCommerz
     }
 
 
-
+    // payment Success,Fail, Cancel, IPN
     static function InitiateSuccess($tran_id):int{
+
+        //এখানে তো অলরেডি একটি ট্রানজেকশন আইডি থাকবে. invoiceController.php -> PaymentSuccess() যেটা এসেছে সেটা মিলাবে.
+
+        // পেমেন্ট যদি সাকসেস হয় তাহলে আমাদের ডেটাবেজে payment_status একটা কলাম আছে সেখান থেকে সাকসেস শো করাবে
         Invoice::where(['tran_id'=>$tran_id,'val_id'=>0])->update(['payment_status'=>'Success']);
         return 1;
     }
-
-
-
-
-
-
-
 
     static function InitiateFail($tran_id):int{
        Invoice::where(['tran_id'=>$tran_id,'val_id'=>0])->update(['payment_status'=>'Fail']);
        return 1;
     }
-
-
 
     static function InitiateCancel($tran_id):int{
         Invoice::where(['tran_id'=>$tran_id,'val_id'=>0])->update(['payment_status'=>'Cancel']);

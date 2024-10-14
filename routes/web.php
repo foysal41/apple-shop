@@ -75,3 +75,10 @@ Route::get('/DeleteCartList/{product_id}', [ProductController::class, 'DeleteCar
 Route::get("/InvoiceCreate",[InvoiceController::class,'InvoiceCreate'])->middleware([TokenAuthenticate::class]);
 Route::get("/InvoiceList",[InvoiceController::class,'InvoiceList'])->middleware([TokenAuthenticate::class]);
 Route::get("/InvoiceProductList/{invoice_id}",[InvoiceController::class,'InvoiceProductList'])->middleware([TokenAuthenticate::class]);
+
+
+//payment
+Route::post("/PaymentSuccess",[InvoiceController::class,'PaymentSuccess']);
+Route::post("/PaymentCancel",[InvoiceController::class,'PaymentCancel']);
+Route::post("/PaymentFail",[InvoiceController::class,'PaymentFail']);
+//IPN call এর route web.php  রাখা হয়নি। কারণ web.php তে CSRF security এনাবেল করা থাকে. এর জন্য এই ফাইলটাকে API.php মধ্যে রাখা হয়েছে
