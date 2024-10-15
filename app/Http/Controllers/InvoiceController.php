@@ -164,3 +164,4 @@ class InvoiceController extends Controller
         return SSLCommerz::InitiateIPN($request->input('tran_id'),$request->input('status'),$request->input('val_id'));
     }
 }
+

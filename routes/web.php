@@ -10,10 +10,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\TokenAuthenticate;
 use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'HomePage']);
 
 
 // Brand List
