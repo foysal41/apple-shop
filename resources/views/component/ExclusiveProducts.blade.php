@@ -66,9 +66,11 @@
 
 <script>
 
-
+// একটি ফাংশন তৈরি করলাম এবং সেখানে axios ব্যবহার করে ডাটাবেজের মধ্যে থেকে popular enam এই data গুলো তুলে নিয়ে আসলাম
     async function Popular(){
         let res=await axios.get("/ListProductByRemark/popular");
+
+        //PopularItem কে ফাঁকা হয়ে একটি  loop চালিয়ে দিলাম
         $("#PopularItem").empty();
         res.data['data'].forEach((item,i)=>{
             let EachItem=`<div class="col-lg-3 col-md-4 col-6">
@@ -96,6 +98,7 @@
                                     </div>
                                 </div>
                             </div>`
+             //উক্ত html এর ভেতরে এই loop বসিয়ে দিলাম
             $("#PopularItem").append(EachItem);
         })
 
