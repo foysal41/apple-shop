@@ -21,6 +21,8 @@
             await Category();
             await Hero();
             await TopCategory();
+            //পেজের শুরুতে prpeloader এনিমেশন যুক্ত করছি
+            //শুরুতে যে কমপ্লিট গুলো শো করালে হবে সেগুলো দেখিয়ে প্রডাক্টটা সেট করে দিব. স্ক্রল করতে করতে বাকিগুলো লোড নিয়ে নিবে
             $(".preloader").delay(90).fadeOut(100).addClass('loaded');
             await Popular();
             await New();
