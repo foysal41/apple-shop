@@ -1,6 +1,8 @@
 @extends('layout.app')
 @section('content')
     @include('component.MenuBar')
+
+    <!--তৃতীয়তঃ এই কম্পিউটার ভেতরে যাব  ByBrandList.blade.php-->
     @include('component.ByBrandList')
     @include('component.TopBrands')
     @include('component.Footer')

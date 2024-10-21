@@ -25,12 +25,19 @@
 </div>
 <script>
 
+/*
+    চতুর্থ কাজ এই পেজে সকল কর্মকাণ্ড পরিচালনা করা যেটা by-category-list.blade.php component এর মধ্যে করেছি
 
+*/
+
+ // এখানে একটা ফাংশন বানালাম  ByBrand
     async function ByBrand(){
         let searchParams=new URLSearchParams(window.location.search);
         let id=searchParams.get('id');
 
+        //ডাটাবেজ থেকে API  call করলাম
         let res=await axios.get(`/ListProductByBrand/${id}`);
+        //#byBrandList এই div ফাঁকা করে নিলাম
         $("#byBrandList").empty();
         res.data['data'].forEach((item,i)=>{
             let EachItem=`<div class="col-lg-3 col-md-4 col-6">
@@ -60,7 +67,15 @@
                                     </div>
                                 </div>
                             </div>`
-            $("#byBrandList").append(EachItem);
+
+             //আর এখানে append করে দিলাম
+
+             $("#byBrandList").append(EachItem);
+
+             /*যে ব্রান্ডে ঢুকবো ব্র্যান্ডের নামটা ডায়নামিক ভাবে দেখানোর জন্য .text funciton ইউজ করলাম. যেটা bradecram শো করাবো
+             <h1>Brand: <span id="BrandName"></span></h1>
+
+             */
 
             $("#BrandName").text( res.data['data'][0]['brand']['brandName']);
 

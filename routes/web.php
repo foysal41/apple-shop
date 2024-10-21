@@ -16,6 +16,7 @@ use App\Http\Controllers\HomeController;
 // Home Page
 Route::get('/', [HomeController::class, 'HomePage']);
 Route::get('/by-category', [CategoryController::class, 'ByCategoryPage']);
+Route::get('/by-brand', [BrandController::class, 'ByBrandPage']);
 
 
 
