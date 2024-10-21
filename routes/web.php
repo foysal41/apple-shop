@@ -17,6 +17,7 @@ use App\Http\Controllers\HomeController;
 Route::get('/', [HomeController::class, 'HomePage']);
 Route::get('/by-category', [CategoryController::class, 'ByCategoryPage']);
 Route::get('/by-brand', [BrandController::class, 'ByBrandPage']);
+Route::get('/policy', [PolicyController::class, 'PolicyPage']);
 
 
 

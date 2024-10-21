@@ -23,6 +23,9 @@
                     <div class="widget">
                         <h6 class="widget_title">Useful Links</h6>
                         <ul class="widget_links">
+
+                            <!---->
+                             <!--এখানে এই চারটি জায়গায় অ্যাড করে দিলাম-->
                             <li><a href="/policy?type=about">About Us</a></li>
                             <li><a href="/policy?type=how to buy">How to Buy</a></li>
                             <li><a href="/policy?type=contact">Contact</a></li>

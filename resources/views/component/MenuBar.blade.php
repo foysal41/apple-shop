@@ -13,6 +13,7 @@
                 <div class="col-md-6">
                     <div class="text-center text-md-end">
                         <ul class="header_list">
+                            <!-- href এর মধ্যে আমরা টাইপটাকে মেনশন করে দিলাম তাহলে এবাউটের লিংক থেকে ওই টাইপের আন্ডারে যে কনটেন্ট টা ডিসপ্লে হবে -->
                             <li><a href="/policy?type=about">About</a></li>
 
                             @if(Cookie::get('token') !== null)
