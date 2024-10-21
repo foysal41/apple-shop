@@ -27,9 +27,15 @@
             //categoryName ডাটাবেজ টেবিলের নামটা পাঠিয়ে দিলাম
             //categoryImg ডাটাবেজ টেবিলের নামটা পাঠিয়ে দিলাম
             // #TopCategoryItem এই ফাংশনটা অ্যাপেন্ড করে দিলাম
+            /*
+             <a href="" এর ভিতরে /by-category?id= মানে হচ্ছে by-category click or ধরে যাবে কোন আইটেমটা ধরবে সেটা হচ্ছে ${item['id']
+             যে কয়টা category প্রোডাক্ট পাবে সে কয়টা পেজ সেই প্রোডাক্ট সহ ডিসপ্লে হবে
+            */
+
             let EachItem= `<div class="p-2 col-2">
                 <div class="item">
                     <div class="categories_box">
+
                         <a href="/by-category?id=${item['id']}">
                             <img src="${item['categoryImg']}" alt="cate_img1"/>
                             <span>${item['categoryName']}</span>

@@ -43,6 +43,7 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                     <ul class="navbar-nav">
                         <li><a class="nav-link nav_item" href="{{url("/")}}">Home</a></li>
+                        <!--মেনুতে প্রোডাক্টের ড্রপ ডাউন আছে. এটা javascript দিয়ে নিচে append করে দেওয়া আছে CategoryItem id এর মাধ্য-->
                         <li class="dropdown">
                             <a class="dropdown-toggle nav-link" href="#" data-bs-toggle="dropdown">Products</a>
                             <div class="dropdown-menu">
@@ -85,13 +86,13 @@
 
             /*<li> <a class="dropdown-item nav-link nav_item" href="about.html"> Item </a> </li>*/
 
-            // categoryName ডাটাবেজ টেবিলের নামটা পাঠিয়ে দিলাম
+            /*let EachItem= এই লাইনে যেটা করেছি উপরে প্রোডাক্টের ড্রপ ডাউনের যে li গুলো হবে তার লুপ এখানে ঘোরাবো.
+                href="" এর ভিতরে /by-category?id= মানে হচ্ছে by-category click or ধরে যাবে কোন আইটেমটা ধরবে সেটা হচ্ছে ${item['id']
+            */
+
+             // categoryName ডাটাবেজ টেবিলের নামটা পাঠিয়ে দিলাম
             // #CategoryItem এই ফাংশনটা অ্যাপেন্ড করে দিলাম
-
-            let EachItem= ` <li><a class="dropdown-item nav-link nav_item" href="/by-category?id=${item['id']}">
-
-
-                ${item['categoryName']}</a></li>`
+            let EachItem= ` <li><a class="dropdown-item nav-link nav_item" href="/by-category?id=${item['id']}">${item['categoryName']}</a></li>`
 
             $("#CategoryItem").append(EachItem);
 
