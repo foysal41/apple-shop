@@ -54,7 +54,9 @@
                             </div>
                         </div>
                         <div class="cart_btn">
+                             <!--add_tocart এই আইডির ভিতরে অনেক onClick function এক্সিকিউট  করে দিলাম -->
                             <button onclick="AddToCart()" class="btn btn-fill-out btn-addtocart" type="button"><i class="icon-basket-loaded"></i> Add to cart</button>
+                            <!--add_wishlist এই আইডির ভিতরে অনেক onClick function এক্সিকিউট  করে দিলাম -->
                             <a class="add_wishlist" onclick="AddToWishList()" href="#"><i class="icon-heart"></i></a>
                         </div>
                     </div>
@@ -69,6 +71,9 @@
 
 <script>
 
+/*
+single product page এই প্রোডাক্ট প্লাস মাইনাস করার জন্য সিম্পল ব্যবহার করেছি
+*/
 
     $('.plus').on('click', function() {
         if ($(this).prev().val()) {
@@ -81,11 +86,18 @@
         }
     });
 
+    //URLSearchParams দিয়ে প্রোডাক্ট এর id ধরলাম. এই আইডি ধরে পরবর্তীতে add to cart করব এবং wishlist add করব
+
     let searchParams = new URLSearchParams(window.location.search);
     let id = searchParams.get('id');
 
 
     async function productDetails() {
+        //ProductDetailsById api call করার মাধ্যমে প্রোডাক্ট এর ডিটেল তুলে নিয়ে আসলাম.
+
+        // আমরা যখন পোস্টম্যান এ  produtDetailsById/1 করতাম তাহলে যে জিনিসগুলো পেতাম.  একটা id, img1,img2, titiel, price, descriptions etc. এখানে DOM manupulate করে ডেটা গুলো ডায়নামিক ভাবে পাস করছি
+
+
         let res = await axios.get("/ProductDetailsById/"+id);
         let Details=await res.data['data'];
 
@@ -100,10 +112,11 @@
         document.getElementById('p_des').innerText=Details[0]['product']['short_des'];
         document.getElementById('p_details').innerHTML=Details[0]['des'];
 
-        // Product Size & Color
+        // এখানে যেটা করছি প্রোডাক্ট এর সাইজের string  টা কে array তে কনভার্ট করে নিচ্ছি
         let size= Details[0]['size'].split(',');
         let color=Details[0]['color'].split(',');
 
+        // সাইজ এবং কালার এর দুইটাই পরপর dropdown রেন্ডার করেছি
         let SizeOption=`<option value=''>Choose Size</option>`;
         $("#p_size").append(SizeOption);
         size.forEach((item)=>{
@@ -111,13 +124,15 @@
             $("#p_size").append(option);
         })
 
-
+        //
         let ColorOption=`<option value=''>Choose Color</option>`;
         $("#p_color").append(ColorOption);
         color.forEach((item)=>{
             let option=`<option value='${item}'>${item}</option>`;
             $("#p_color").append(option);
         })
+
+        //কোন ইমেজের উপর ক্লিক করলে কি হবে সেটাও কাজ করে দেয়া হয়েছে
 
         $('#img1').on('click', function() {
             $('#product_img1').attr('src', Details[0]['img1']);
@@ -155,12 +170,17 @@
         })
     }
 
+
+    //এখানে আমরা add to cart and add to wishlist ফাংশন বানিয়ে নিলাম.
     async function AddToCart() {
         try {
+
+            //html থেকে size, color, qty নিয়ে নিলাম
             let p_size=document.getElementById('p_size').value;
             let p_color=document.getElementById('p_color').value;
             let p_qty=document.getElementById('p_qty').value;
 
+            //size, color, qty ছাড়া প্রোডাক্ট একটু কার্ড করতে পারবে না .
             if(p_size.length===0){
                 alert("Product Size Required !");
             }
@@ -170,6 +190,7 @@
             else if(p_qty===0){
                 alert("Product Qty Required !");
             }
+            // যদি সবকিছু ঠিকঠাক থাকে তাহলে CreateCartList রিকোয়েস্ট  json body product_id, color, size, qty পাঠাবো|
             else {
                 $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
                 let res = await axios.post("/CreateCartList",{
@@ -184,6 +205,7 @@
                 }
             }
 
+            // যদি একাউন্ট ক্রিয়েট করা না থাকে তাহলে লগইন পেজে পাঠিয়ে দিচ্ছি
         } catch (e) {
             if (e.response.status === 401) {
                 sessionStorage.setItem("last_location",window.location.href)
@@ -193,14 +215,21 @@
     }
 
 
+    // wishlist এ প্রোডাক্ট এড করতে হলে ইউজার কে প্রথমে লগ ইন অবস্থায় থাকতে হবে| wishlist প্রোডাক্ট এড করতে হলে এটা /CreateWishList/ এটা দিয়ে postman এ রিকোয়েস্ট পাঠাতাম. এখানে শুধু আইডির সাথে কল করছি
+
     async function AddToWishList() {
         try{
             $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
             let res = await axios.get("/CreateWishList/"+id);
             $(".preloader").delay(90).fadeOut(100).addClass('loaded');
+
+            //যদি লগইন অবস্থায় থাকে তাহলে 200 স্ট্যাটাসের মাধ্যমে প্রোডাক্ট wishlist অ্যাড করাব
             if(res.status===200){
                 alert("Request Successful")
             }
+
+            // user login না থাকে তাহলে লগইন পেজে পাঠিয়ে দিব
+
         }catch (e) {
             if(e.response.status===401){
                 sessionStorage.setItem("last_location",window.location.href)

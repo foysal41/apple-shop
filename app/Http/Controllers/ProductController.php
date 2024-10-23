@@ -17,6 +17,12 @@ use App\Models\ProductCart;
 
 class ProductController extends Controller
 {
+
+    public function Details()
+    {
+        return view('pages.details-page');
+    }
+
     public function ListProductByCategory(Request $request):JsonResponse{
         //একটা ক্যাটাগরির আন্ডারে তার প্রোডাক্টগুলি লিস্ট।
 

@@ -66,6 +66,14 @@
 
 <script>
 
+    /* 3. <li><a href="/details?id=${item['id']}" class="popup-ajax"><i class="icon-magnifier-add"></i></a></li>
+
+    details?id=${item['id']} সিঙ্গেল প্রডাক্ট হিসেবে দেখানোর জন্য, queryString দিয়ে প্রোডাক্ট এর আইডি টা কে দেখিয়ে দিতে হবে
+
+    popular, new, trendy সব কয়টার জন্য একই কাজ করব 
+
+    */
+
 // একটি ফাংশন তৈরি করলাম এবং সেখানে axios ব্যবহার করে ডাটাবেজের মধ্যে থেকে popular enam এই data গুলো তুলে নিয়ে আসলাম
     async function Popular(){
         let res=await axios.get("/ListProductByRemark/popular");
@@ -81,6 +89,7 @@
                                         </a>
                                         <div class="product_action_box">
                                             <ul class="list_none pr_action_btn">
+
                                                 <li><a href="/details?id=${item['id']}" class="popup-ajax"><i class="icon-magnifier-add"></i></a></li>
                                             </ul>
                                         </div>

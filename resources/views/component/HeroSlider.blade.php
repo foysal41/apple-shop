@@ -8,6 +8,12 @@
     </div>
 </div>
 <script>
+
+    /*<a class="btn btn-fill-out rounded-0 staggered-animation text-uppercase" href="/details?id=${item['product_id']}" data-animation="slideInLeft" data-animation-delay="1.5s">Shop Now</a>
+
+    slider এর shop now বাটন টার ভিতরে product_id দেখিয়ে দিলাম
+
+    */
     async function Hero() {
         let res = await axios.get("/ListProductSlider");
         $("#carouselSection").empty();
