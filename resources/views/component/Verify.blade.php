@@ -8,9 +8,11 @@
                             <h3>Verification</h3>
                         </div>
                             <div class="form-group mb-3">
+                                <!--একটি আইডি বসিয়ে দিলাম code -->
                                 <input id="code" type="text" required="" class="form-control" name="email" placeholder="Verification Code">
                             </div>
                             <div class="form-group mb-3">
+                                <!--onClick verify function এক্সিকিউট করে দিলাম-->
                                 <button onclick="verify()" type="submit" class="btn btn-fill-out btn-block" name="login">Confirm</button>
                             </div>
                     </div>
@@ -25,6 +27,7 @@
     async function verify() {
 
         let code =document.getElementById('code').value;
+        //login.blade.php থেকে ইমেইল টা তুলে নিয়ে আসব 
         let email=sessionStorage.getItem('email');
         if (code.length === 0) {
             alert("Code Required!");
@@ -46,5 +49,10 @@
         }
 
     }
+
+    // আরেকটি ভেরিফাই পেজ বানালাম
+
+
 </script>
+
 
