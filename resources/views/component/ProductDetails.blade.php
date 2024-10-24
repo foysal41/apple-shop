@@ -220,6 +220,7 @@ single product page এই প্রোডাক্ট প্লাস মাই
 
     async function AddToWishList() {
         try{
+            //withlist প্রোডাক্ট এড করার সময় লোডারটা শো হবে তারপরে আবার রিকোয়েস্ট চলে গেলে লোডার রিমুভ হয়ে যাবে. এজন্য দুইবার প্রিলোডারের কোড এড করলাম
             $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
             let res = await axios.get("/CreateWishList/"+id);
             $(".preloader").delay(90).fadeOut(100).addClass('loaded');
@@ -233,6 +234,7 @@ single product page এই প্রোডাক্ট প্লাস মাই
 
         }catch (e) {
             if(e.response.status===401){
+                //ইউজারের লাস্ট লোকেশন টা সেট setItem করে নিলাম. লগইন করে আসার পরে wishlist product add করতে দিব
                 sessionStorage.setItem("last_location",window.location.href)
                 window.location.href="/login"
             }

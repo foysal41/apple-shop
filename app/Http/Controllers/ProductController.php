@@ -129,6 +129,8 @@ class ProductController extends Controller
     }
 
     public function CreateWishList(Request $request):JsonResponse{
+        // preloader কাজ করছে কিনা সেটা sleep ফাংশন টি ব্যবহার করে চেক করে দেখতে পারি sleep(5);
+
         //আমাদের middleware কাজ হচ্ছে হেডারে সার্বক্ষণিক ইমেইল এবং আইডি দিতে থাকা. তদ্রূপভাবে $request দিয়ে -> header থেকে id টা কে ধরে নিলাম
 
         //অন্যদিকে productWishlist model তৈরি করে রেখেছি সে মডেলের ভেতর দুইটি product_id, user_id fillable property রয়েছে
