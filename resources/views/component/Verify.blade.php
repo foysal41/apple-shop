@@ -27,7 +27,7 @@
     async function verify() {
 
         let code =document.getElementById('code').value;
-        //login.blade.php থেকে ইমেইল টা তুলে নিয়ে আসব 
+        //login.blade.php থেকে ইমেইল টা তুলে নিয়ে আসব
         let email=sessionStorage.getItem('email');
         if (code.length === 0) {
             alert("Code Required!");
@@ -35,6 +35,7 @@
             $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
             let res=await axios.get("/VerifyLogin/"+email+"/"+code);
             if(res.status===200){
+                //ইউজারের last লোকেশন টা sessionStorage get করে "last_location" তুলে নিয়ে আসলাম
                     if(sessionStorage.getItem("last_location")){
                         window.location.href=sessionStorage.getItem("last_location")
                     }

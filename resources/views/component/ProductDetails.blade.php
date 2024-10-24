@@ -208,6 +208,7 @@ single product page এই প্রোডাক্ট প্লাস মাই
             // যদি একাউন্ট ক্রিয়েট করা না থাকে তাহলে লগইন পেজে পাঠিয়ে দিচ্ছি
         } catch (e) {
             if (e.response.status === 401) {
+                /*যদি ইউজার অ্যাকাউন্ট ক্রিয়েট করা না থাকে তাহলে তো আমরা লগইন পেজে পাঠিয়ে দিচ্ছি.পাঠিয়ে দেওয়ার সময় ইউজার যে লোকেশন বা জে এই url ছিল সেইটা মনে রাখতে হবে.সেইটা  sessionStorage এর ভেতরে সেভ করে রাখলাম.*/
                 sessionStorage.setItem("last_location",window.location.href)
                 window.location.href = "/login"
             }
