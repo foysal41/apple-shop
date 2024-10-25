@@ -21,6 +21,9 @@ Route::get('/policy', [PolicyController::class, 'PolicyPage']);
 Route::get('/details', [ProductController::class, 'Details']);
 Route::get('/login', [UserController::class, 'LoginPage']);
 Route::get('/verify', [UserController::class, 'VerifyPage']);
+Route::get('/wish', [ProductController::class, 'WishList']);
+
+
 
 
 
