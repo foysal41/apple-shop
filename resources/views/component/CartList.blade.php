@@ -61,6 +61,8 @@
 
 <script>
     async function CartList(){
+        //প্রথমে empty করে নিলাম তারপর loop চালিয়ে লিস্টটাকে ডিসপ্লে করালাম
+
         let res=await axios.get(`/CartList`);
         $("#byList").empty();
 
@@ -75,6 +77,7 @@
             $("#byList").append(EachItem);
         })
 
+        //টোটাল নিয়ে কাজ করেছি
         await CartTotal(res.data['data']);
 
         $(".remove").on('click',function () {
@@ -87,6 +90,8 @@
 
 
     async function CartTotal(data){
+        //প্রথমে জিরো ধরিয়েছি তারপর loop ঘুরিয়ে ওয়ান বাই ওয়ান এর এ থেকে আইটেমগুলো যোগ করিয়াছি. যোগ করে টোটাল সংখ্যাটা এইচটিএমএল এর ভিতরে ট্যাক্স হিসেবে এ্যাপেন্ট করে দিয়েছি
+
         let Total=0;
         data.forEach((item,i)=>{
             Total=Total+parseFloat(item['price']);
@@ -95,7 +100,7 @@
     }
 
 
-
+//remove system
    async function RemoveCartList(id){
       $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
         let res=await axios.get("/DeleteCartList/"+id);
