@@ -16,6 +16,12 @@
                             <!-- href এর মধ্যে আমরা টাইপটাকে মেনশন করে দিলাম তাহলে এবাউটের লিংক থেকে ওই টাইপের আন্ডারে যে কনটেন্ট টা ডিসপ্লে হবে -->
                             <li><a href="/policy?type=about">About</a></li>
 
+
+                            <!--সাইডে যদি cookies থাকে তাহলে আমরা দেখাবো যে লগইন আছি, আর না থাকলে দেখাবো লগ আউট এই জিনিসটা সহজেই if else condition এর মধ্যে দেখাতে পারি
+
+                            1. যদি Cookie নামে কোন token থাকে
+                            2. web.php এর ভিতরে thake logout set করা
+                            -->
                             @if(Cookie::get('token') !== null)
                                 <li><a href="{{url("/profile")}}"> <i class="linearicons-user"></i> Account</a></li>
                                 <li><a class="btn btn-danger btn-sm" href="{{url("/logout")}}"> Logout</a></li>

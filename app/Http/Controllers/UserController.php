@@ -90,7 +90,8 @@ class UserController extends Controller
 
     public function UserLogout()
     {
-        return redirect('userLoginPage')->cookie('token',null,-1);
+        //user লগ আউট করলে তাকে পাঠিয়ে দিব.
+        return redirect('/')->cookie('token',null,-1);
     }
 
 
