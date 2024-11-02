@@ -8,7 +8,8 @@
             <div class="modal-body">
                 <table class="table">
                     <tbody id="paymentList">
-
+<!--চেক আউট পেজে ক্লিক করলে এভেলেবেল পেমেন্ট গেটওয়ে এই পেজটিতে ইউজারকে নিয়ে আসবে
+ -->
                     </tbody>
                 </table>
             </div>

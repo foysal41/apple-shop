@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-12">
 
+                <!-- প্রত্যেকটা include গেলে দেখতে পারবো -->
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                         <button class="nav-link " id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>

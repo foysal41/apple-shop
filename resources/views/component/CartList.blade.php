@@ -116,16 +116,17 @@
 
     async function CheckOut(){
         $(".preloader").delay(90).fadeIn(100).removeClass('loaded');
-
+    //যখন কাস্টমার চেক আউট করবে তার অন ক্লিকের ফাংশন টা এখানে বানানো হয়েছে. PaymentMethodList.blade.php থেকে paymentList empty করে নিলাম.
         $("#paymentList").empty();
 
+        //যখন checkout বাটনে ক্লিক করবে তখন invoice এই api টা কল করছি
         let res=await axios.get("/InvoiceCreate");
 
         $(".preloader").delay(90).fadeOut(100).addClass('loaded');
 
 
         if(res.status===200) {
-
+// যদি status 200 হয় টা হলে PaymentMethodList.blade.php থেকে paymentList modal শো করবে।
             $("#paymentMethodModal").modal('show');
 
             res.data['data'][0]['paymentMethod'].forEach((item,i)=>{

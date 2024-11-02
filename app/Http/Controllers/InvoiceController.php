@@ -146,6 +146,7 @@ class InvoiceController extends Controller
     }
 
 
+    // যখন  PaymentCancel হলে প্রোফাইল পেইজে নিয়ে যাবো সেখানে দেখাবো তোমার পেমেন্ট ক্যান্সেল হয়েছে সাকসেস হয়েছে
     function PaymentCancel(Request $request){
         SSLCommerz::InitiateCancel($request->query('tran_id'));
         return redirect('/profile');
